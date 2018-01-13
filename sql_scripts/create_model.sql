@@ -94,11 +94,17 @@ id int identity(1,1) not null,
 created_date date not null DEFAULT getdate(),
 update_date date null,	
 end_date date null,
+fm_game_id int not null,
 game_session_id uniqueidentifier not null DEFAULT newid()
 )
 alter table FM_Game_Session
 add constraint PK_fm_game_session
 PRIMARY KEY (id)
+
+ALTER TABLE FM_Game_Session
+ADD CONSTRAINT FK_fm_game_session_fm_game
+FOREIGN KEY (fm_game_id) REFERENCES FM_Game(id)
+
 go
 
 if OBJECT_ID('FM_Feedback') is not null
