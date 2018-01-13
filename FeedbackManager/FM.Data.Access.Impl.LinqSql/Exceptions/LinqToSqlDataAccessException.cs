@@ -1,4 +1,4 @@
-﻿using FM.Data.Access.Interfaces.Common.Exceptions;
+﻿using FM.Data.Access.Interfaces.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;

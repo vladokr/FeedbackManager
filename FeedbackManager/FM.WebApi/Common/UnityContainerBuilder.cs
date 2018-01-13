@@ -1,4 +1,11 @@
-﻿using Microsoft.Practices.Unity;
+﻿using FM.Business.Interfaces;
+using FM.Business.Services;
+using FM.Data.Access.Impl.LinqSql.DataAccess;
+using FM.Data.Access.Interfaces;
+using FM.Data.Access.Interfaces.Common;
+using FM.WebApi.Controllers;
+using FM.WebApi.DataConnection;
+using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,18 +19,22 @@ namespace FM.WebApi.common
         public static IUnityContainer getContainer()
         {
             IUnityContainer container = new UnityContainer();
-
-            /*
+          
             // business layer
-            container.RegisterType<ICustomerService, CustomerService>();
-            // access layer
-            container.RegisterType<ICustomerDataAccess<Customer>, CustomerDataAccess>();
-            container.RegisterType<IOrderDataAccess<Order>, OrderDataAccess>();
-            container.RegisterType<IConnectionManager, AdoConnectionManager>();
-            container.RegisterType<IConnectionConfig, AppSettingConnectionConfig>();
+            container.RegisterType<IUserBusinessService, UserBusinessService>();
+            container.RegisterType<IFeedbackBusinessService, FeedbackBusinessService>();
 
-            container.RegisterType<CustomerController>();
-            */
+            // access layer
+            container.RegisterType<IFeedbackDataAccess, FeedbackDataAccessLS>();
+            container.RegisterType<IGameDataAccess, GameDataAccessLS>();
+            container.RegisterType<IGameSessionDataAccess, GameSessionDataAccessLS>();
+            container.RegisterType<IUserDataAccess, UserDataAccessLS>();
+            container.RegisterType<IConnectionStringProvider, ConnectionStringProvider>();
+
+            // api
+            container.RegisterType<FeedbacksController>();
+            container.RegisterType<UsersController>();
+            
             return container;
         }
     }

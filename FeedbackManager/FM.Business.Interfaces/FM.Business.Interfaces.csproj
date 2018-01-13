@@ -40,7 +40,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\IBusinessException.cs" />
+    <Compile Include="IFeedbackBusinessService.cs" />
+    <Compile Include="IUserBusinessService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FM.Domain.Model\FM.Domain.Model.csproj">
+      <Project>{4a1f75be-4cf1-4b8c-a5a0-945fba8d3e97}</Project>
+      <Name>FM.Domain.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

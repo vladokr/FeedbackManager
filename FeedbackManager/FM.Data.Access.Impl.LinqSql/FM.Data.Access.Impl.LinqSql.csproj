@@ -45,7 +45,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataAccess\AbstractLinqToSqlDataAccess.cs" />
     <Compile Include="DataAccess\FeedbackDataAccessLS.cs" />
     <Compile Include="DataAccess\GameDataAccessLS.cs" />
     <Compile Include="DataAccess\GameSessionDataAccessLS.cs" />

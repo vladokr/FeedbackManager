@@ -10,7 +10,12 @@ namespace FM.Data.Access.Impl.LinqSql.DataAccess
 {
     public class GameSessionDataAccessLS : IGameSessionDataAccess
     {
-        public GameSession Insert(GameSession item)
+        public void Insert(GameSession item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<GameSession> SelectAll()
         {
             throw new NotImplementedException();
         }

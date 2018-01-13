@@ -10,6 +10,7 @@ namespace FM.Data.Access.Interfaces.Common
     public interface IDataAccess<T> where T : BaseEntity
     {
         T SelectById(int id);
-        T Insert(T item);
+        IList<T> SelectAll();
+        void Insert(T item);
     }
 }

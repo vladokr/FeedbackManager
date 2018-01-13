@@ -19,7 +19,7 @@ namespace FM.Data.Access.Impl.LinqSql.DataAccess
 
         public FeedbackDataAccessLS(IConnectionStringProvider ConnectionStringProvider)
         {
-            if(ConnectionStringProvider == null)
+            if (ConnectionStringProvider == null)
             {
                 throw new LinqToSqlDataAccessException("Constructor initialization failed.", new ArgumentNullException("ConnectionStringProvider"));
             }
@@ -27,19 +27,45 @@ namespace FM.Data.Access.Impl.LinqSql.DataAccess
             this.csProvider = ConnectionStringProvider;
         }
 
-        public Feedback Insert(Feedback item)
+        public void Insert(Feedback item)
+        {
+            using (FeedbackManagerDataContext dataContext = new FeedbackManagerDataContext(this.csProvider.ConnectionString))
+            {
+                try
+                {
+                    FM_Feedback fm_feedback = EntityMapper.MapToDatabase<Feedback, FM_Feedback>(item);
+                    dataContext.FM_Feedbacks.InsertOnSubmit(fm_feedback);
+                    dataContext.SubmitChanges();
+
+                }
+                catch (Exception ex)
+                {
+                    throw new LinqToSqlDataAccessException("Unable to Insert Feedback", ex);
+                }
+            }
+        }
+
+        public IList<Feedback> SelectAll()
         {
             throw new NotImplementedException();
         }
 
         public Feedback SelectById(int id)
         {
-            FeedbackManagerDataContext dataContext = new FeedbackManagerDataContext(this.csProvider.ConnectionString);
-
-            var fm_feedback = dataContext.FM_Feedbacks.Where(f => f.id == id).FirstOrDefault<FM_Feedback>();
-            if (fm_feedback != null)
+            using (FeedbackManagerDataContext dataContext = new FeedbackManagerDataContext(this.csProvider.ConnectionString))
             {
-                return EntityMapper.MapToModel<Feedback,FM_Feedback>(fm_feedback);
+                try
+                {
+                    var fm_feedback = dataContext.FM_Feedbacks.Where(f => f.id == id).FirstOrDefault<FM_Feedback>();
+                    if (fm_feedback != null)
+                    {
+                        return EntityMapper.MapToModel<Feedback, FM_Feedback>(fm_feedback);
+                    }
+                }
+                catch(Exception ex)
+                {
+                    throw new LinqToSqlDataAccessException("Unable to Select Feedback By Id id=" + id, ex);
+                }
             }
 
             return null;

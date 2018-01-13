@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FM.Data.Access.Interfaces.Common.Exceptions
+namespace FM.Business.Interfaces.Exceptions
 {
-    public interface IDataAccessException
+    public interface IBusinessException
     {
-
     }
 }
