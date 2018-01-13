@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("FM.Domain.Access.Services.LinqSql")]
+[assembly: AssemblyTitle("FM.Data.Access.Interfaces")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("FM.Domain.Access.Services.LinqSql")]
+[assembly: AssemblyProduct("FM.Data.Access.Interfaces")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("f4b3822e-63d0-40b1-a70d-b46880355d43")]
+[assembly: Guid("b6e9c117-15dd-40bc-a297-b9bb64d627b0")]
 
 // Version information for an assembly consists of the following four values:
 //

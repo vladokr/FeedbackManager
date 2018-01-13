@@ -51,12 +51,12 @@ create table FM_User
 	id int identity(1,1) not null,
     create_date date not null DEFAULT getdate(),
 	update_date date null,		
-	userlogin nvarchar(20) not null,
-	userpassword nvarchar(20) not null,
+	user_login nvarchar(20) not null,
+	user_password nvarchar(20) not null,
 	name nvarchar(200) not null,
 	surname nvarchar(200) not null,
 	email nvarchar(200) not null,
-	fm_role_id int not null
+	role_id int not null
 )
 alter table FM_User
 add constraint PK_fm_user
@@ -64,7 +64,7 @@ PRIMARY KEY (id)
 
 ALTER TABLE FM_User
 ADD CONSTRAINT FK_fm_user_fm_role
-FOREIGN KEY (fm_role_id) REFERENCES FM_Role(id)
+FOREIGN KEY (role_id) REFERENCES FM_Role(id)
 go
 
 
@@ -91,11 +91,11 @@ end
 create table FM_Game_Session
 (
 id int identity(1,1) not null,
-created_date date not null DEFAULT getdate(),
+create_date date not null DEFAULT getdate(),
 update_date date null,	
 end_date date null,
-fm_game_id int not null,
-game_session_id uniqueidentifier not null DEFAULT newid()
+game_id int not null,
+session_identifier uniqueidentifier not null DEFAULT newid()
 )
 alter table FM_Game_Session
 add constraint PK_fm_game_session
@@ -103,7 +103,7 @@ PRIMARY KEY (id)
 
 ALTER TABLE FM_Game_Session
 ADD CONSTRAINT FK_fm_game_session_fm_game
-FOREIGN KEY (fm_game_id) REFERENCES FM_Game(id)
+FOREIGN KEY (game_id) REFERENCES FM_Game(id)
 
 go
 
@@ -114,12 +114,12 @@ end
 create table FM_Feedback
 (
 id int identity(1,1) not null,
-created_date date not null DEFAULT getdate(),
+create_date date not null DEFAULT getdate(),
 update_date date null,	
 rating int not null,
 comment nvarchar(500) null,
-fm_user_id int not null,
-fm_game_session_id int not null
+[user_id] int not null,
+game_session_id int not null
 )
 alter table FM_Feedback
 add constraint PK_fm_feedback
@@ -127,14 +127,14 @@ PRIMARY KEY (id)
 
 ALTER TABLE FM_Feedback
 ADD CONSTRAINT FK_fm_feedback_fm_user
-FOREIGN KEY (fm_user_id) REFERENCES FM_User(id)
+FOREIGN KEY ([user_id]) REFERENCES FM_User(id)
 
 ALTER TABLE FM_Feedback
 ADD CONSTRAINT FK_fm_feedback_fm_game_session
-FOREIGN KEY (fm_game_session_id) REFERENCES FM_Game_Session(id)
+FOREIGN KEY (game_session_id) REFERENCES FM_Game_Session(id)
 
 ALTER TABLE FM_Feedback
-ADD CONSTRAINT UC_fm_user_fm_game_session UNIQUE (fm_user_id,fm_game_session_id)
+ADD CONSTRAINT UC_fm_user_fm_game_session UNIQUE ([user_id],game_session_id)
 go
 
 create user FeedbackManager for login FeedbackManager
