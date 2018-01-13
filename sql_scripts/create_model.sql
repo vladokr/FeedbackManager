@@ -33,8 +33,8 @@ end
 create table FM_Role
 (
 id int not null,
-create_date date not null DEFAULT getdate(),
-update_date date null,	
+create_date datetime not null DEFAULT getdate(),
+update_date datetime null,	
 name nvarchar(50) not null
 )
 alter table FM_Role
@@ -49,8 +49,8 @@ end
 create table FM_User
 (
 	id int identity(1,1) not null,
-    create_date date not null DEFAULT getdate(),
-	update_date date null,		
+    create_date datetime not null DEFAULT getdate(),
+	update_date datetime null,		
 	user_login nvarchar(20) not null,
 	user_password nvarchar(20) not null,
 	name nvarchar(200) not null,
@@ -74,9 +74,9 @@ begin
 end
 create table FM_Game
 (
-id int identity(1,1) not null,
-create_date date not null DEFAULT getdate(),
-update_date date null,	
+id int not null,
+create_date datetime not null DEFAULT getdate(),
+update_date datetime null,	
 name nvarchar(200) not null
 )
 alter table FM_Game
@@ -91,9 +91,10 @@ end
 create table FM_Game_Session
 (
 id int identity(1,1) not null,
-create_date date not null DEFAULT getdate(),
-update_date date null,	
-end_date date null,
+create_date datetime not null DEFAULT getdate(),
+update_date datetime null,	
+[start_date] datetime null,
+end_date datetime null,
 game_id int not null,
 session_identifier uniqueidentifier not null DEFAULT newid()
 )
@@ -114,8 +115,8 @@ end
 create table FM_Feedback
 (
 id int identity(1,1) not null,
-create_date date not null DEFAULT getdate(),
-update_date date null,	
+create_date datetime not null DEFAULT getdate(),
+update_date datetime null,	
 rating int not null,
 comment nvarchar(500) null,
 [user_id] int not null,
