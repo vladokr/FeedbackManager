@@ -77,10 +77,14 @@ This operation is only allowed to a user with Role=OPERATOR.
 GET http://localhost:49562/feedbacks/rating/2
 ```
 
-## Author
+### Documentation
+
+For more detailed architecture and design overview please check the PDF document inside the Documentation folder.
+
+### Author
 
 * **Vlado Kragujevski** 
 
-## License
+### License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
