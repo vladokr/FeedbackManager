@@ -12,7 +12,6 @@ namespace FM.Business.Services
 {
     public class UserBusinessService : IUserBusinessService
     {
-
         IUserDataAccess userDataAccess;
 
         public UserBusinessService(IUserDataAccess UserDataAccess)

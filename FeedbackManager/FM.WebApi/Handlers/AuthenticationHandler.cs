@@ -1,6 +1,7 @@
 ﻿using FM.Business.Interfaces.Common;
 using FM.Data.Access.Interfaces.Common;
 using FM.Domain.Model.Entities;
+using FM.WebApi.common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,7 +42,7 @@ namespace FM.WebApi.Handlers
             // Doesn't match the application key
             if(appConfig.ApplicationKey != appKey)
             {
-                return Unauthorized();
+                return Unauthorized(request);
             }
 
             // Check Credentials
@@ -64,7 +65,7 @@ namespace FM.WebApi.Handlers
             }
             else
             {
-                return Unauthorized();
+                return Unauthorized(request);
             }         
         }
 
@@ -90,9 +91,10 @@ namespace FM.WebApi.Handlers
             return String.Empty;
         }
 
-        private Task<HttpResponseMessage> Unauthorized()
+        private Task<HttpResponseMessage> Unauthorized(HttpRequestMessage request)
         {
-            var response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
+            var error = new { message = "Unauthenticated Request." };
+            var response = request.CreateResponse(HttpStatusCode.Unauthorized, error);
             var tsc = new TaskCompletionSource<HttpResponseMessage>();
             tsc.SetResult(response);
             return tsc.Task;

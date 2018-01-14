@@ -27,7 +27,6 @@ namespace FM.Domain.Model.Entities
         public int? GameSessionId { get; set; }
 
         #region Non persistent properties
-        [DataMember]
         public string UserLogin { get; set; }
         public Guid SessionIdentifier { get; set; }
         #endregion

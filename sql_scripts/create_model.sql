@@ -155,9 +155,14 @@ BEGIN
 	select @user_id = id from FM_User where user_login = @user_login
 	select @game_session_id = id from FM_Game_Session where session_identifier = @session_identifier
 
+	if @game_session_id is NULL
+		THROW 51000, 'A Game Session is not found for the given session ID.', 1;
+
 	insert into FM_Feedback(rating, comment, [user_id], game_session_id)
 	values(@rating, @comment, @user_id, @game_session_id)
 
+	select * from FM_Feedback where id = @@IDENTITY
+	return;
 END
 GO
 

@@ -19,9 +19,7 @@ namespace FM.WebApi.filters
         }
 
         public override void OnException(HttpActionExecutedContext context)
-        {
-            Error error = new Error();
-
+        {          
             // Data Access Layer Exceptions.
             // Business Layer Exceptions.
             // Web API Exceptions.
@@ -30,15 +28,21 @@ namespace FM.WebApi.filters
                 context.Exception is RestApiException
                 )
             {
-                error.message = context.Exception?.Message;
-                error.detail = context.Exception.InnerException?.Message;
+                var error = new
+                {
+                    message = context.Exception?.Message,
+                    detail = context.Exception.InnerException?.Message
+                };
                 context.Response = context.Request.CreateResponse(HttpStatusCode.BadRequest, error);
                 logger.LogInfo(this, context.Exception);
             }
             // Not handled Exceptions.
             else
             {
-                error.message = context.Exception?.Message;
+                var error = new
+                {
+                    message = context.Exception?.Message,
+                };
                 context.Response = context.Request.CreateResponse(HttpStatusCode.InternalServerError, error);
                 logger.LogError(this, context.Exception);
             }          

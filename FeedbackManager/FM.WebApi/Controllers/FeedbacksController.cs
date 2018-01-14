@@ -52,7 +52,7 @@ namespace FM.WebApi.Controllers
             }
             else
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
         }
     }
