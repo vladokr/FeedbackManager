@@ -96,7 +96,6 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Attributes\WebApiAuthorizeAttribute.cs" />
-    <Compile Include="Common\Error.cs" />
     <Compile Include="Common\UnityContainerBuilder.cs" />
     <Compile Include="Common\UnityResolver.cs" />
     <Compile Include="Controllers\FeedbacksController.cs" />

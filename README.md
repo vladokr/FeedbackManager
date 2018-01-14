@@ -1,6 +1,6 @@
 # Feedback Manager
 
-It provides a REST Api for players to give feedbacks about their game experiances. 
+Provides a REST Api for players to give feedbacks about their game experiances. 
 
 ## Getting Started
 
@@ -15,6 +15,7 @@ These instructions will get you a copy of the project up and running on your loc
 * SQL Server - at least Express 2008 or higher
 * GitBash for Windows
 * Internet Information Server - for deployment
+* Postman - for consuming the API
 
 ### Installing
 
@@ -22,56 +23,66 @@ These instructions will get you a copy of the project up and running on your loc
 * With VS 2017 open the solution file (.sln)
 * Run a build and verify that there are no errors
 
+### Seting up the Database
+
+* Execute create_model.sql to create the data model 
+* Execute insert_sample_data.sql to create some test data
+
+### Configuration
+
+* Set the database connection string inside the FM.WebApi\Web.config file
+* Use username=FeedbackManager and password=@fGm1ND1#
+```
+connectionString="Data Source=VLADO\SQLEXPRESS;Initial Catalog=feedback_manager;User ID=FeedbackManager;Password=@fGm1ND1#"/>
+```
+
 ## Running the tests
 
-The test can be runed inside VS 2017 using Nunit 3 Test Adapter. After successful build the tests are displayed into the Test Explorer window.
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
+You can run the tests using the Test Explorer inside VS 2017. To see the tests in the Test Explorer first build the solution.
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+* Build the solution in a Release mode
+* Navigate on the WebApi project and execute Publish to a local folder
+* Copy the content from the folder to the Server and place them inside a IIS directory
+* Verify that the connection string is correct
+* Set the log4net path in Web.Config and verify the IIS process has permissions to write to that path 
 
-## Built With
+### Consuming REST API
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+In every HTTP Request Header the following data must be set:
 
-## Contributing
+```
+content-type: application/json
+authorization: Basic V1_0D06C23E-9FC1-472F-B042-6B96B9CE2FDF
+x-userlogin: Ubi-UserId
+x-userpassword: 5678hygr
+```
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+Here are some examples of how to consume the API.
 
-## Versioning
+## Store a Feedback
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+This operation is only allowed to a user with Role=PLAYER. The user can post a feedback only for himself.
+```
+POST http://localhost/feedbacks/A2F4394C-86D5-4554-87AC-7BCBBB68E7D8
+{"Rating":"2", "Comment":"My First Feedback"}
+```
 
-## Authors
+## Get Feedbacks
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+Get last 15 Feedbacks with rating higher or equal than 2. 
+This operation is only allowed to a user with Role=OPERATOR.
+```
+GET http://localhost:49562/feedbacks/rating/2
+```
+
+## Author
+
+* **Vlado Kragujevski** 
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone who's code was used
-* Inspiration
-* etc
