@@ -10,5 +10,6 @@ namespace FM.Data.Access.Interfaces
 {
     public interface IFeedbackDataAccess : IDataAccess<Feedback>
     {
+        IList<Feedback> SelectByRating(int rating);
     }
 }

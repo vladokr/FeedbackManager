@@ -10,26 +10,27 @@ using FM.Data.Access.Impl.LinqSql.Exceptions;
 using FM.Data.Access.Impl.LinqSql.GeneratedDAL;
 using AutoMapper;
 using FM.Data.Access.Impl.LinqSql.Mappers;
+using System.Linq.Expressions;
 
 namespace FM.Data.Access.Impl.LinqSql.DataAccess
 {
     public class FeedbackDataAccessLS : IFeedbackDataAccess
     {
-        IConnectionStringProvider csProvider;
+        IAppConfig appConfig;
 
-        public FeedbackDataAccessLS(IConnectionStringProvider ConnectionStringProvider)
+        public FeedbackDataAccessLS(IAppConfig AppConfig)
         {
-            if (ConnectionStringProvider == null)
+            if (AppConfig == null)
             {
-                throw new LinqToSqlDataAccessException("Constructor initialization failed.", new ArgumentNullException("ConnectionStringProvider"));
+                throw new LinqToSqlDataAccessException("FeedbackDataAccessLS initialization failed.", new ArgumentNullException("AppConfig"));
             }
 
-            this.csProvider = ConnectionStringProvider;
+            this.appConfig = AppConfig;
         }
 
         public Feedback Insert(Feedback item)
         {
-            using (FeedbackManagerDataContext dataContext = new FeedbackManagerDataContext(this.csProvider.ConnectionString))
+            using (FeedbackManagerDataContext dataContext = new FeedbackManagerDataContext(this.appConfig.ConnectionString))
             {
                 try
                 {
@@ -48,55 +49,57 @@ namespace FM.Data.Access.Impl.LinqSql.DataAccess
 
         public IList<Feedback> SelectAll()
         {
-            throw new NotImplementedException();
+            return SelectMany(null);
         }
 
         public Feedback SelectById(int id)
         {
-            using (FeedbackManagerDataContext dataContext = new FeedbackManagerDataContext(this.csProvider.ConnectionString))
+            return SelectSingle(x => x.id == id);
+        }
+
+        public IList<Feedback> SelectByRating(int rating)
+        {
+            return SelectMany(x => x.rating >= rating);
+        }
+
+        #region Private General Select Methods
+        private Feedback SelectSingle(Expression<Func<FM_Feedback, bool>> criteria)
+        {
+            if (criteria != null)
             {
-                try
-                {
-                    var fm_feedback = dataContext.FM_Feedbacks.Where(f => f.id == id).FirstOrDefault<FM_Feedback>();
-                    if (fm_feedback != null)
-                    {
-                        return EntityMapper.MapToModel<Feedback, FM_Feedback>(fm_feedback);
-                    }
-                }
-                catch(Exception ex)
-                {
-                    throw new LinqToSqlDataAccessException("Unable to Select Feedback By Id id=" + id, ex);
-                }
+                return SelectMany(criteria).SingleOrDefault();
             }
 
             return null;
         }
 
-        public IList<Feedback> Select(Func<Feedback, bool> criteria)
+        private IList<Feedback> SelectMany(Expression<Func<FM_Feedback, bool>> criteria)
         {
-            using (FeedbackManagerDataContext dataContext = new FeedbackManagerDataContext(this.csProvider.ConnectionString))
+            IList<Feedback> feedbacks = new List<Feedback>();
+            using (FeedbackManagerDataContext dataContext = new FeedbackManagerDataContext(this.appConfig.ConnectionString))
             {
                 try
-                {                  
-                    var data = dataContext.FM_Feedbacks.Where((fm) => criteria(EntityMapper.MapToModel<Feedback, FM_Feedback>(fm)));
-                    if (data != null)
+                {
+                    // If criteria is Null select all.
+                    var dataItems = criteria == null ? dataContext.FM_Feedbacks : dataContext.FM_Feedbacks.Where(criteria);
+                    if (dataItems != null)
                     {
-                        IList<Feedback> selectedFeedbacks = new List<Feedback>();
-                        data.ToList().ForEach((fm) => {
-                            Feedback feedback = EntityMapper.MapToModel<Feedback, FM_Feedback>(fm);
-                            selectedFeedbacks.Add(feedback);
-                        });
-                        return selectedFeedbacks;
+                        foreach (var item in dataItems)
+                        {
+                            Feedback model = EntityMapper.MapToModel<Feedback, FM_Feedback>(item);
+                            feedbacks.Add(model);
+                        }
                     }
                 }
                 catch (Exception ex)
                 {
-                    throw new LinqToSqlDataAccessException("Unable to Select Feedback By Criteria", ex);
+                    throw new LinqToSqlDataAccessException("Unable to Select Many.", ex);
                 }
             }
 
-            return null;
+            return feedbacks;
         }
+        #endregion
 
     }
 }

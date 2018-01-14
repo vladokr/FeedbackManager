@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace FM.Domain.Model.Entities
 {
-    public enum Role 
+    public static class Role
     {
-        PLAYER = 1,
-        OPERATOR = 2
+        public const String PLAYER = "1";
+        public const String OPERATOR = "2";
     }
 }

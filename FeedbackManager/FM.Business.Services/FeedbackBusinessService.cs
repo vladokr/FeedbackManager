@@ -31,8 +31,7 @@ namespace FM.Business.Services
       
         public IList<Feedback> SelectByRating(int rating)
         {
-            Func<Feedback, bool> criteria = (f) =>  f.Rating >= rating;
-            return feedbackDataAccess.Select(criteria);
+            return feedbackDataAccess.SelectByRating(rating);
         }
     }
 }

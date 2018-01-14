@@ -10,5 +10,6 @@ namespace FM.Data.Access.Interfaces
 {
     public interface IUserDataAccess : IDataAccess<User>
     {
+        User SelectByUserLogin(String UserLogin);
     }
 }

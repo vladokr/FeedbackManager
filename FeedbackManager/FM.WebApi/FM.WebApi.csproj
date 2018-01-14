@@ -95,16 +95,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Attributes\WebApiAuthorizeAttribute.cs" />
     <Compile Include="Common\Error.cs" />
     <Compile Include="Common\UnityContainerBuilder.cs" />
     <Compile Include="Common\UnityResolver.cs" />
     <Compile Include="Controllers\FeedbacksController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
-    <Compile Include="DataConnection\ConnectionStringProvider.cs" />
-    <Compile Include="filters\ExceptionFilter.cs" />
+    <Compile Include="Common\WebApiAppConfig.cs" />
+    <Compile Include="Exceptions\RestApiException.cs" />
+    <Compile Include="Filters\ExceptionFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Handlers\AuthenticationHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
