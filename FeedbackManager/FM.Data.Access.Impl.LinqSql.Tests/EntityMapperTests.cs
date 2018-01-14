@@ -74,7 +74,7 @@ namespace FM.Data.Access.Impl.LinqSql.Tests
             fmUser.name = "Vlado";
             fmUser.surname = "Kragujevski";
             fmUser.email = "myemail@gmail.com";
-            fmUser.role_id = (int)Role.PLAYER;
+            fmUser.role_id = Int32.Parse(Role.PLAYER);
             fmUser.user_login = "test";
             fmUser.user_password = "1234";
 
@@ -103,7 +103,7 @@ namespace FM.Data.Access.Impl.LinqSql.Tests
             user.Name = "Vlado";
             user.Surname = "Kragujevski";
             user.Email  = "myemail@gmail.com";
-            user.RoleId = (int)Role.PLAYER;
+            user.RoleId = Int32.Parse(Role.PLAYER);
             user.UserLogin = "test";
             user.UserPassword = "1234";
 

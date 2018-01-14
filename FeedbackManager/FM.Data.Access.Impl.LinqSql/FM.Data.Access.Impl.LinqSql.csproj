@@ -65,6 +65,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\FM.Common.Interfaces\FM.Common.Interfaces.csproj">
+      <Project>{9990a82e-8924-43f8-afe6-7aa6b18f9450}</Project>
+      <Name>FM.Common.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FM.Data.Access.Interfaces\FM.Data.Access.Interfaces.csproj">
       <Project>{b6e9c117-15dd-40bc-a297-b9bb64d627b0}</Project>
       <Name>FM.Data.Access.Interfaces</Name>

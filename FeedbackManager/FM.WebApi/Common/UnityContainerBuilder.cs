@@ -2,6 +2,8 @@
 using FM.Business.Interfaces.Common;
 using FM.Business.Services;
 using FM.Business.Services.Common;
+using FM.Common.Impl.Loggers;
+using FM.Common.Intercases.Loggers;
 using FM.Data.Access.Impl.LinqSql.DataAccess;
 using FM.Data.Access.Interfaces;
 using FM.Data.Access.Interfaces.Common;
@@ -35,8 +37,10 @@ namespace FM.WebApi.common
             container.RegisterType<IUserDataAccess, UserDataAccessLS>();
 
 
-            // WEB API
+            // Common
+            container.RegisterType<ILogger, Log4NetLogger>(new ContainerControlledLifetimeManager());
 
+            // WEB API
             // Registers as a Singleton
             container.RegisterType<IAppConfig, WebApiAppConfig>(new ContainerControlledLifetimeManager());
             // Registers as a Singleton, but its child classes resolves with new instances 

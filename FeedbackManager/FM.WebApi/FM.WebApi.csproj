@@ -135,6 +135,14 @@
       <Project>{e9e02829-5b0c-4f4a-beb1-255cfc73a317}</Project>
       <Name>FM.Business.Services</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FM.Common.Impl\FM.Common.Impl.csproj">
+      <Project>{5264584d-03e5-45f2-b813-ecfba9b741f0}</Project>
+      <Name>FM.Common.Impl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FM.Common.Interfaces\FM.Common.Interfaces.csproj">
+      <Project>{9990a82e-8924-43f8-afe6-7aa6b18f9450}</Project>
+      <Name>FM.Common.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FM.Data.Access.Impl.LinqSql\FM.Data.Access.Impl.LinqSql.csproj">
       <Project>{ff6cfde1-5e3d-4409-ab96-b79b73999f66}</Project>
       <Name>FM.Data.Access.Impl.LinqSql</Name>
