@@ -7,17 +7,20 @@ namespace FM.WebApi
     {
         public static void Register(HttpConfiguration config)
         {
-            // set the unity container
+            // Set unity container.
             var container = UnityContainerBuilder.getContainer();
             config.DependencyResolver = new UnityResolver(container);
 
+            // Attribute routing.
             config.MapHttpAttributeRoutes();
-
+           
+            // Convention-based routing.
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
+                routeTemplate: "{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+            
 
         }
     }

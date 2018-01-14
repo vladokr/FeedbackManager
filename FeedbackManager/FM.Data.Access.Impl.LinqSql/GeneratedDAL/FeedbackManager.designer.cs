@@ -48,7 +48,7 @@ namespace FM.Data.Access.Impl.LinqSql.GeneratedDAL
     #endregion
 		
 		public FeedbackManagerDataContext() : 
-				base(global::FM.Data.Access.Impl.LinqSql.Properties.Settings.Default.feedback_managerConnectionString, mappingSource)
+				base(global::FM.Data.Access.Impl.LinqSql.Properties.Settings.Default.feedback_managerConnectionString1, mappingSource)
 		{
 			OnCreated();
 		}
@@ -116,6 +116,13 @@ namespace FM.Data.Access.Impl.LinqSql.GeneratedDAL
 				return this.GetTable<FM_User>();
 			}
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_insert_feedback")]
+		public ISingleResult<FM_Feedback> sp_insert_feedback([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> rating, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(20)")] string user_login, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="UniqueIdentifier")] System.Nullable<System.Guid> session_identifier, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(500)")] string comment)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), rating, user_login, session_identifier, comment);
+			return ((ISingleResult<FM_Feedback>)(result.ReturnValue));
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FM_Feedback")]
@@ -137,6 +144,10 @@ namespace FM.Data.Access.Impl.LinqSql.GeneratedDAL
 		private int _user_id;
 		
 		private int _game_session_id;
+		
+		private EntityRef<FM_Game_Session> _FM_Game_Session;
+		
+		private EntityRef<FM_User> _FM_User;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -160,6 +171,8 @@ namespace FM.Data.Access.Impl.LinqSql.GeneratedDAL
 		
 		public FM_Feedback()
 		{
+			this._FM_Game_Session = default(EntityRef<FM_Game_Session>);
+			this._FM_User = default(EntityRef<FM_User>);
 			OnCreated();
 		}
 		
@@ -183,7 +196,7 @@ namespace FM.Data.Access.Impl.LinqSql.GeneratedDAL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_create_date", DbType="Date NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_create_date", DbType="DateTime NOT NULL")]
 		public System.DateTime create_date
 		{
 			get
@@ -203,7 +216,7 @@ namespace FM.Data.Access.Impl.LinqSql.GeneratedDAL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_update_date", DbType="Date")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_update_date", DbType="DateTime")]
 		public System.Nullable<System.DateTime> update_date
 		{
 			get
@@ -274,6 +287,10 @@ namespace FM.Data.Access.Impl.LinqSql.GeneratedDAL
 			{
 				if ((this._user_id != value))
 				{
+					if (this._FM_User.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
 					this.Onuser_idChanging(value);
 					this.SendPropertyChanging();
 					this._user_id = value;
@@ -294,11 +311,83 @@ namespace FM.Data.Access.Impl.LinqSql.GeneratedDAL
 			{
 				if ((this._game_session_id != value))
 				{
+					if (this._FM_Game_Session.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
 					this.Ongame_session_idChanging(value);
 					this.SendPropertyChanging();
 					this._game_session_id = value;
 					this.SendPropertyChanged("game_session_id");
 					this.Ongame_session_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FM_Game_Session_FM_Feedback", Storage="_FM_Game_Session", ThisKey="game_session_id", OtherKey="id", IsForeignKey=true)]
+		public FM_Game_Session FM_Game_Session
+		{
+			get
+			{
+				return this._FM_Game_Session.Entity;
+			}
+			set
+			{
+				FM_Game_Session previousValue = this._FM_Game_Session.Entity;
+				if (((previousValue != value) 
+							|| (this._FM_Game_Session.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._FM_Game_Session.Entity = null;
+						previousValue.FM_Feedbacks.Remove(this);
+					}
+					this._FM_Game_Session.Entity = value;
+					if ((value != null))
+					{
+						value.FM_Feedbacks.Add(this);
+						this._game_session_id = value.id;
+					}
+					else
+					{
+						this._game_session_id = default(int);
+					}
+					this.SendPropertyChanged("FM_Game_Session");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FM_User_FM_Feedback", Storage="_FM_User", ThisKey="user_id", OtherKey="id", IsForeignKey=true)]
+		public FM_User FM_User
+		{
+			get
+			{
+				return this._FM_User.Entity;
+			}
+			set
+			{
+				FM_User previousValue = this._FM_User.Entity;
+				if (((previousValue != value) 
+							|| (this._FM_User.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._FM_User.Entity = null;
+						previousValue.FM_Feedbacks.Remove(this);
+					}
+					this._FM_User.Entity = value;
+					if ((value != null))
+					{
+						value.FM_Feedbacks.Add(this);
+						this._user_id = value.id;
+					}
+					else
+					{
+						this._user_id = default(int);
+					}
+					this.SendPropertyChanged("FM_User");
 				}
 			}
 		}
@@ -338,6 +427,8 @@ namespace FM.Data.Access.Impl.LinqSql.GeneratedDAL
 		
 		private string _name;
 		
+		private EntitySet<FM_Game_Session> _FM_Game_Sessions;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -354,10 +445,11 @@ namespace FM.Data.Access.Impl.LinqSql.GeneratedDAL
 		
 		public FM_Game()
 		{
+			this._FM_Game_Sessions = new EntitySet<FM_Game_Session>(new Action<FM_Game_Session>(this.attach_FM_Game_Sessions), new Action<FM_Game_Session>(this.detach_FM_Game_Sessions));
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Int NOT NULL", IsPrimaryKey=true)]
 		public int id
 		{
 			get
@@ -377,7 +469,7 @@ namespace FM.Data.Access.Impl.LinqSql.GeneratedDAL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_create_date", DbType="Date NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_create_date", DbType="DateTime NOT NULL")]
 		public System.DateTime create_date
 		{
 			get
@@ -397,7 +489,7 @@ namespace FM.Data.Access.Impl.LinqSql.GeneratedDAL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_update_date", DbType="Date")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_update_date", DbType="DateTime")]
 		public System.Nullable<System.DateTime> update_date
 		{
 			get
@@ -437,6 +529,19 @@ namespace FM.Data.Access.Impl.LinqSql.GeneratedDAL
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FM_Game_FM_Game_Session", Storage="_FM_Game_Sessions", ThisKey="id", OtherKey="game_id")]
+		public EntitySet<FM_Game_Session> FM_Game_Sessions
+		{
+			get
+			{
+				return this._FM_Game_Sessions;
+			}
+			set
+			{
+				this._FM_Game_Sessions.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -456,6 +561,18 @@ namespace FM.Data.Access.Impl.LinqSql.GeneratedDAL
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
+		
+		private void attach_FM_Game_Sessions(FM_Game_Session entity)
+		{
+			this.SendPropertyChanging();
+			entity.FM_Game = this;
+		}
+		
+		private void detach_FM_Game_Sessions(FM_Game_Session entity)
+		{
+			this.SendPropertyChanging();
+			entity.FM_Game = null;
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FM_Game_Session")]
@@ -470,11 +587,17 @@ namespace FM.Data.Access.Impl.LinqSql.GeneratedDAL
 		
 		private System.Nullable<System.DateTime> _update_date;
 		
+		private System.Nullable<System.DateTime> _start_date;
+		
 		private System.Nullable<System.DateTime> _end_date;
 		
 		private int _game_id;
 		
 		private System.Guid _session_identifier;
+		
+		private EntitySet<FM_Feedback> _FM_Feedbacks;
+		
+		private EntityRef<FM_Game> _FM_Game;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -486,6 +609,8 @@ namespace FM.Data.Access.Impl.LinqSql.GeneratedDAL
     partial void Oncreate_dateChanged();
     partial void Onupdate_dateChanging(System.Nullable<System.DateTime> value);
     partial void Onupdate_dateChanged();
+    partial void Onstart_dateChanging(System.Nullable<System.DateTime> value);
+    partial void Onstart_dateChanged();
     partial void Onend_dateChanging(System.Nullable<System.DateTime> value);
     partial void Onend_dateChanged();
     partial void Ongame_idChanging(int value);
@@ -496,6 +621,8 @@ namespace FM.Data.Access.Impl.LinqSql.GeneratedDAL
 		
 		public FM_Game_Session()
 		{
+			this._FM_Feedbacks = new EntitySet<FM_Feedback>(new Action<FM_Feedback>(this.attach_FM_Feedbacks), new Action<FM_Feedback>(this.detach_FM_Feedbacks));
+			this._FM_Game = default(EntityRef<FM_Game>);
 			OnCreated();
 		}
 		
@@ -519,7 +646,7 @@ namespace FM.Data.Access.Impl.LinqSql.GeneratedDAL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_create_date", DbType="Date NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_create_date", DbType="DateTime NOT NULL")]
 		public System.DateTime create_date
 		{
 			get
@@ -539,7 +666,7 @@ namespace FM.Data.Access.Impl.LinqSql.GeneratedDAL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_update_date", DbType="Date")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_update_date", DbType="DateTime")]
 		public System.Nullable<System.DateTime> update_date
 		{
 			get
@@ -559,7 +686,27 @@ namespace FM.Data.Access.Impl.LinqSql.GeneratedDAL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_end_date", DbType="Date")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_start_date", DbType="DateTime")]
+		public System.Nullable<System.DateTime> start_date
+		{
+			get
+			{
+				return this._start_date;
+			}
+			set
+			{
+				if ((this._start_date != value))
+				{
+					this.Onstart_dateChanging(value);
+					this.SendPropertyChanging();
+					this._start_date = value;
+					this.SendPropertyChanged("start_date");
+					this.Onstart_dateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_end_date", DbType="DateTime")]
 		public System.Nullable<System.DateTime> end_date
 		{
 			get
@@ -590,6 +737,10 @@ namespace FM.Data.Access.Impl.LinqSql.GeneratedDAL
 			{
 				if ((this._game_id != value))
 				{
+					if (this._FM_Game.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
 					this.Ongame_idChanging(value);
 					this.SendPropertyChanging();
 					this._game_id = value;
@@ -619,6 +770,53 @@ namespace FM.Data.Access.Impl.LinqSql.GeneratedDAL
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FM_Game_Session_FM_Feedback", Storage="_FM_Feedbacks", ThisKey="id", OtherKey="game_session_id")]
+		public EntitySet<FM_Feedback> FM_Feedbacks
+		{
+			get
+			{
+				return this._FM_Feedbacks;
+			}
+			set
+			{
+				this._FM_Feedbacks.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FM_Game_FM_Game_Session", Storage="_FM_Game", ThisKey="game_id", OtherKey="id", IsForeignKey=true)]
+		public FM_Game FM_Game
+		{
+			get
+			{
+				return this._FM_Game.Entity;
+			}
+			set
+			{
+				FM_Game previousValue = this._FM_Game.Entity;
+				if (((previousValue != value) 
+							|| (this._FM_Game.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._FM_Game.Entity = null;
+						previousValue.FM_Game_Sessions.Remove(this);
+					}
+					this._FM_Game.Entity = value;
+					if ((value != null))
+					{
+						value.FM_Game_Sessions.Add(this);
+						this._game_id = value.id;
+					}
+					else
+					{
+						this._game_id = default(int);
+					}
+					this.SendPropertyChanged("FM_Game");
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -638,6 +836,18 @@ namespace FM.Data.Access.Impl.LinqSql.GeneratedDAL
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
+		
+		private void attach_FM_Feedbacks(FM_Feedback entity)
+		{
+			this.SendPropertyChanging();
+			entity.FM_Game_Session = this;
+		}
+		
+		private void detach_FM_Feedbacks(FM_Feedback entity)
+		{
+			this.SendPropertyChanging();
+			entity.FM_Game_Session = null;
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FM_Role")]
@@ -653,6 +863,8 @@ namespace FM.Data.Access.Impl.LinqSql.GeneratedDAL
 		private System.Nullable<System.DateTime> _update_date;
 		
 		private string _name;
+		
+		private EntitySet<FM_User> _FM_Users;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -670,6 +882,7 @@ namespace FM.Data.Access.Impl.LinqSql.GeneratedDAL
 		
 		public FM_Role()
 		{
+			this._FM_Users = new EntitySet<FM_User>(new Action<FM_User>(this.attach_FM_Users), new Action<FM_User>(this.detach_FM_Users));
 			OnCreated();
 		}
 		
@@ -693,7 +906,7 @@ namespace FM.Data.Access.Impl.LinqSql.GeneratedDAL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_create_date", DbType="Date NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_create_date", DbType="DateTime NOT NULL")]
 		public System.DateTime create_date
 		{
 			get
@@ -713,7 +926,7 @@ namespace FM.Data.Access.Impl.LinqSql.GeneratedDAL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_update_date", DbType="Date")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_update_date", DbType="DateTime")]
 		public System.Nullable<System.DateTime> update_date
 		{
 			get
@@ -753,6 +966,19 @@ namespace FM.Data.Access.Impl.LinqSql.GeneratedDAL
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FM_Role_FM_User", Storage="_FM_Users", ThisKey="id", OtherKey="role_id")]
+		public EntitySet<FM_User> FM_Users
+		{
+			get
+			{
+				return this._FM_Users;
+			}
+			set
+			{
+				this._FM_Users.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -771,6 +997,18 @@ namespace FM.Data.Access.Impl.LinqSql.GeneratedDAL
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_FM_Users(FM_User entity)
+		{
+			this.SendPropertyChanging();
+			entity.FM_Role = this;
+		}
+		
+		private void detach_FM_Users(FM_User entity)
+		{
+			this.SendPropertyChanging();
+			entity.FM_Role = null;
 		}
 	}
 	
@@ -798,6 +1036,10 @@ namespace FM.Data.Access.Impl.LinqSql.GeneratedDAL
 		
 		private int _role_id;
 		
+		private EntitySet<FM_Feedback> _FM_Feedbacks;
+		
+		private EntityRef<FM_Role> _FM_Role;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -824,6 +1066,8 @@ namespace FM.Data.Access.Impl.LinqSql.GeneratedDAL
 		
 		public FM_User()
 		{
+			this._FM_Feedbacks = new EntitySet<FM_Feedback>(new Action<FM_Feedback>(this.attach_FM_Feedbacks), new Action<FM_Feedback>(this.detach_FM_Feedbacks));
+			this._FM_Role = default(EntityRef<FM_Role>);
 			OnCreated();
 		}
 		
@@ -847,7 +1091,7 @@ namespace FM.Data.Access.Impl.LinqSql.GeneratedDAL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_create_date", DbType="Date NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_create_date", DbType="DateTime NOT NULL")]
 		public System.DateTime create_date
 		{
 			get
@@ -867,7 +1111,7 @@ namespace FM.Data.Access.Impl.LinqSql.GeneratedDAL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_update_date", DbType="Date")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_update_date", DbType="DateTime")]
 		public System.Nullable<System.DateTime> update_date
 		{
 			get
@@ -998,11 +1242,62 @@ namespace FM.Data.Access.Impl.LinqSql.GeneratedDAL
 			{
 				if ((this._role_id != value))
 				{
+					if (this._FM_Role.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
 					this.Onrole_idChanging(value);
 					this.SendPropertyChanging();
 					this._role_id = value;
 					this.SendPropertyChanged("role_id");
 					this.Onrole_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FM_User_FM_Feedback", Storage="_FM_Feedbacks", ThisKey="id", OtherKey="user_id")]
+		public EntitySet<FM_Feedback> FM_Feedbacks
+		{
+			get
+			{
+				return this._FM_Feedbacks;
+			}
+			set
+			{
+				this._FM_Feedbacks.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FM_Role_FM_User", Storage="_FM_Role", ThisKey="role_id", OtherKey="id", IsForeignKey=true)]
+		public FM_Role FM_Role
+		{
+			get
+			{
+				return this._FM_Role.Entity;
+			}
+			set
+			{
+				FM_Role previousValue = this._FM_Role.Entity;
+				if (((previousValue != value) 
+							|| (this._FM_Role.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._FM_Role.Entity = null;
+						previousValue.FM_Users.Remove(this);
+					}
+					this._FM_Role.Entity = value;
+					if ((value != null))
+					{
+						value.FM_Users.Add(this);
+						this._role_id = value.id;
+					}
+					else
+					{
+						this._role_id = default(int);
+					}
+					this.SendPropertyChanged("FM_Role");
 				}
 			}
 		}
@@ -1025,6 +1320,18 @@ namespace FM.Data.Access.Impl.LinqSql.GeneratedDAL
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_FM_Feedbacks(FM_Feedback entity)
+		{
+			this.SendPropertyChanging();
+			entity.FM_User = this;
+		}
+		
+		private void detach_FM_Feedbacks(FM_Feedback entity)
+		{
+			this.SendPropertyChanging();
+			entity.FM_User = null;
 		}
 	}
 }

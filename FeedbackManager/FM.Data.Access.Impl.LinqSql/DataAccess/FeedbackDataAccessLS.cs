@@ -27,16 +27,17 @@ namespace FM.Data.Access.Impl.LinqSql.DataAccess
             this.csProvider = ConnectionStringProvider;
         }
 
-        public void Insert(Feedback item)
+        public Feedback Insert(Feedback item)
         {
             using (FeedbackManagerDataContext dataContext = new FeedbackManagerDataContext(this.csProvider.ConnectionString))
             {
                 try
                 {
-                    FM_Feedback fm_feedback = EntityMapper.MapToDatabase<Feedback, FM_Feedback>(item);
-                    dataContext.FM_Feedbacks.InsertOnSubmit(fm_feedback);
-                    dataContext.SubmitChanges();
+                    FM_Feedback fmFeedback = dataContext.sp_insert_feedback(item.Rating, item.UserLogin, item.SessionIdentifier, item.Comment)
+                                                        .ToList().FirstOrDefault<FM_Feedback>();
 
+                    return EntityMapper.MapToModel<Feedback, FM_Feedback>(fmFeedback);
+                                                       
                 }
                 catch (Exception ex)
                 {

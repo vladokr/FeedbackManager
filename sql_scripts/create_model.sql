@@ -138,10 +138,34 @@ ALTER TABLE FM_Feedback
 ADD CONSTRAINT UC_fm_user_fm_game_session UNIQUE ([user_id],game_session_id)
 go
 
+if OBJECT_ID('sp_insert_feedback') is not null
+begin
+	drop procedure sp_insert_feedback
+end
+go
+CREATE PROCEDURE sp_insert_feedback 
+@rating int,
+@user_login nvarchar(20),
+@session_identifier uniqueidentifier,
+@comment nvarchar(500) = null
+AS
+declare @user_id int
+declare @game_session_id int
+BEGIN
+	select @user_id = id from FM_User where user_login = @user_login
+	select @game_session_id = id from FM_Game_Session where session_identifier = @session_identifier
+
+	insert into FM_Feedback(rating, comment, [user_id], game_session_id)
+	values(@rating, @comment, @user_id, @game_session_id)
+
+END
+GO
+
 create user FeedbackManager for login FeedbackManager
 GRANT SELECT on FM_Role to FeedbackManager
 GRANT SELECT on FM_User to FeedbackManager
 GRANT SELECT on FM_Game to FeedbackManager
 GRANT SELECT on FM_Game_Session to FeedbackManager
 GRANT SELECT, INSERT, UPDATE, DELETE on FM_Feedback to FeedbackManager
+GRANT EXECUTE on sp_insert_feedback to FeedbackManager
 go

@@ -9,7 +9,7 @@ namespace FM.Business.Interfaces
 {
     public interface IFeedbackBusinessService
     {
-        void CreateFeedback(Feedback feedback);
-        IList<Feedback> SelectFeedbackByrating(int rating);
+        Feedback CreateFeedback(Feedback feedback);
+        IList<Feedback> SelectFeedbackByRating(int rating);
     }
 }

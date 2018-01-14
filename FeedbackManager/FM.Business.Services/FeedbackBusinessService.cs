@@ -24,12 +24,15 @@ namespace FM.Business.Services
             this.feedbackDataAccess = FeedbackDataAccess;
         }
 
-        public void CreateFeedback(Feedback feedback)
+        public Feedback CreateFeedback(Feedback feedback)
         {
-            feedbackDataAccess.Insert(feedback);
+            //1. check required data
+            //2. check session id exists
+
+            return feedbackDataAccess.Insert(feedback);
         }
 
-        public IList<Feedback> SelectFeedbackByrating(int rating)
+        public IList<Feedback> SelectFeedbackByRating(int rating)
         {
             throw new NotImplementedException();
         }

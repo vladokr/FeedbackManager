@@ -10,7 +10,7 @@ namespace FM.Data.Access.Impl.LinqSql.DataAccess
 {
     public class GameDataAccessLS : IGameDataAccess
     {
-        public void Insert(Game item)
+        public Game Insert(Game item)
         {
             throw new NotImplementedException();
         }

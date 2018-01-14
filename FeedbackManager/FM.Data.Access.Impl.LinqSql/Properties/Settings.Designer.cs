@@ -33,5 +33,16 @@ namespace FM.Data.Access.Impl.LinqSql.Properties {
                 return ((string)(this["feedback_managerConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=VLADO\\SQLEXPRESS;Initial Catalog=feedback_manager;Persist Security In" +
+            "fo=True;User ID=FeedbackManager")]
+        public string feedback_managerConnectionString1 {
+            get {
+                return ((string)(this["feedback_managerConnectionString1"]));
+            }
+        }
     }
 }

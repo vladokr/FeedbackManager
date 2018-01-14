@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FM.Business.Interfaces;
+using FM.Domain.Model.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -9,10 +11,19 @@ namespace FM.WebApi.Controllers
 {
     public class FeedbacksController : ApiController
     {
-        // GET api/feedback
-        public IEnumerable<string> Get()
+
+        IFeedbackBusinessService feedbackBusinessService;
+
+        public FeedbacksController(IFeedbackBusinessService feedbackBusinessService)
         {
-            return new string[] { "value1", "value2" };
+            this.feedbackBusinessService = feedbackBusinessService;
+        }
+
+        // GET /feedbacks
+        [Route("feedbacks")]
+        public IEnumerable<Feedback> Get()
+        {
+            return feedbackBusinessService.SelectFeedbackByRating(1);
         }
 
         // GET api/values/5
@@ -21,9 +32,16 @@ namespace FM.WebApi.Controllers
             return "value";
         }
 
-        // POST api/values
-        public void Post([FromBody]string value)
+        // POST api/feedbacks
+        [Route("feedbacks/{sessionId:guid}")]
+        public Feedback Post([FromBody]Feedback feedback, Guid sessionId)
         {
+            if (ModelState.IsValid)
+            {
+                feedback.SessionIdentifier = sessionId;
+                feedback.UserLogin = "vladokr";
+            }
+            return feedbackBusinessService.CreateFeedback(feedback);
         }
 
         // PUT api/values/5

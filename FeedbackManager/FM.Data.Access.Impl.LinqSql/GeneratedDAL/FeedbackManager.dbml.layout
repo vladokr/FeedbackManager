@@ -2,35 +2,63 @@
 <ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="FeedbackManager">
   <DataContextMoniker Name="/FeedbackManagerDataContext" />
   <nestedChildShapes>
-    <classShape Id="e04f1771-672d-4855-8103-8ac3749deb40" absoluteBounds="0.75, 0.75, 2, 2.1554996744791666">
+    <classShape Id="f0eb272e-20fa-439b-a3ea-e60ed995abb8" absoluteBounds="6.25, 1.125, 2, 2.1554996744791666">
       <DataClassMoniker Name="/FeedbackManagerDataContext/FM_Feedback" />
       <nestedChildShapes>
-        <elementListCompartment Id="db6139ad-a61a-40e5-b1bb-42cf9139124d" absoluteBounds="0.765, 1.21, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="0e737d97-1a61-45ae-8d2d-dc8a2ebd0577" absoluteBounds="6.265, 1.585, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="469a66b7-8950-45d5-8ea3-430a3482c89d" absoluteBounds="3.75, 0.75, 2, 1.5785953776041666">
+    <classShape Id="b9514c6a-89ef-4f9d-9b54-672cbaf9683a" absoluteBounds="0.75, 5.375, 2, 1.5785953776041666">
       <DataClassMoniker Name="/FeedbackManagerDataContext/FM_Game" />
       <nestedChildShapes>
-        <elementListCompartment Id="b3966814-a7eb-4fd7-a4dc-99017666a585" absoluteBounds="3.765, 1.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="de43198b-e948-4318-a8bc-302ffa3f229a" absoluteBounds="0.765, 5.835, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="792ccc40-87f2-4438-991f-f58fd3327a83" absoluteBounds="0.75, 3.75, 2, 1.9631982421875005">
+    <classShape Id="15fbe0a8-092d-46fa-bb15-f9a571cf42b7" absoluteBounds="3.5, 5.125, 2, 2.1554996744791666">
       <DataClassMoniker Name="/FeedbackManagerDataContext/FM_Game_Session" />
       <nestedChildShapes>
-        <elementListCompartment Id="1143debf-9a16-422b-9ab5-35fed7013b03" absoluteBounds="0.765, 4.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="4f6f3b12-9b03-4b2d-a1a8-1925ef4a7b3a" absoluteBounds="3.515, 5.585, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="abaa6dc0-9df5-45c3-99d0-6edbd76c2059" absoluteBounds="3.75, 3.75, 2, 1.5785953776041666">
+    <classShape Id="fd81ed50-dc33-4368-a0b3-1fa8ceb6062c" absoluteBounds="0.75, 1.375, 2, 1.5785953776041666">
       <DataClassMoniker Name="/FeedbackManagerDataContext/FM_Role" />
       <nestedChildShapes>
-        <elementListCompartment Id="cf94040e-32dc-4410-a26c-5cd09b8a2477" absoluteBounds="3.765, 4.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="68dc1454-b8e6-448a-9628-c2edd9f8d5d1" absoluteBounds="0.765, 1.835, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="363eee84-48a0-435f-b1f8-5d091d7918c3" absoluteBounds="6.75, 0.75, 2, 2.5401025390625005">
+    <classShape Id="f0ea3059-36fe-4252-bab3-5f59d54ec52c" absoluteBounds="3.5, 1, 2, 2.5401025390625005">
       <DataClassMoniker Name="/FeedbackManagerDataContext/FM_User" />
       <nestedChildShapes>
-        <elementListCompartment Id="8f24edb7-8650-4074-b9bf-725731331a50" absoluteBounds="6.765, 1.21, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="dc0c9c15-9bfa-4758-93de-afd93d6281ac" absoluteBounds="3.515, 1.46, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <associationConnector edgePoints="[(5.5 : 6.20274983723958); (7.25 : 6.20274983723958); (7.25 : 3.28049967447917)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/FeedbackManagerDataContext/FM_Game_Session/FM_Game_Session_FM_Feedback" />
+      <nodes>
+        <classShapeMoniker Id="15fbe0a8-092d-46fa-bb15-f9a571cf42b7" />
+        <classShapeMoniker Id="f0eb272e-20fa-439b-a3ea-e60ed995abb8" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 6.16429768880208); (3.5 : 6.16429768880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/FeedbackManagerDataContext/FM_Game/FM_Game_FM_Game_Session" />
+      <nodes>
+        <classShapeMoniker Id="b9514c6a-89ef-4f9d-9b54-672cbaf9683a" />
+        <classShapeMoniker Id="15fbe0a8-092d-46fa-bb15-f9a571cf42b7" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.5 : 2.20274983723958); (6.25 : 2.20274983723958)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/FeedbackManagerDataContext/FM_User/FM_User_FM_Feedback" />
+      <nodes>
+        <classShapeMoniker Id="f0ea3059-36fe-4252-bab3-5f59d54ec52c" />
+        <classShapeMoniker Id="f0eb272e-20fa-439b-a3ea-e60ed995abb8" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 2.16429768880208); (3.5 : 2.16429768880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/FeedbackManagerDataContext/FM_Role/FM_Role_FM_User" />
+      <nodes>
+        <classShapeMoniker Id="fd81ed50-dc33-4368-a0b3-1fa8ceb6062c" />
+        <classShapeMoniker Id="f0ea3059-36fe-4252-bab3-5f59d54ec52c" />
+      </nodes>
+    </associationConnector>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

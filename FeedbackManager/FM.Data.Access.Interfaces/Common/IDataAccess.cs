@@ -11,6 +11,6 @@ namespace FM.Data.Access.Interfaces.Common
     {
         T SelectById(int id);
         IList<T> SelectAll();
-        void Insert(T item);
+        T Insert(T item);
     }
 }

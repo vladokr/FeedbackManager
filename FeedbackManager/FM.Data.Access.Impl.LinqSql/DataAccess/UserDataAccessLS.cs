@@ -26,7 +26,7 @@ namespace FM.Data.Access.Impl.LinqSql.DataAccess
             this.csProvider = ConnectionStringProvider;
         }
 
-        public void Insert(User item)
+        public User Insert(User item)
         {
             throw new NotImplementedException();
         }
