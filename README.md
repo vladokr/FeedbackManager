@@ -31,7 +31,7 @@ These instructions will get you a copy of the project up and running on your loc
 ### Configuration
 
 * Set the database connection string inside the FM.WebApi\Web.config file
-* Use username=FeedbackManager and password=@fGm1ND1#
+* Use username="FeedbackManager" and password="@fGm1ND1#"
 ```
 connectionString="Data Source=VLADO\SQLEXPRESS;Initial Catalog=feedback_manager;User ID=FeedbackManager;Password=@fGm1ND1#"/>
 ```
@@ -80,8 +80,6 @@ GET http://localhost:49562/feedbacks/rating/2
 ## Author
 
 * **Vlado Kragujevski** 
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
 ## License
 
