@@ -8,9 +8,10 @@ namespace FM.Common.Intercases.Loggers
 {
     public interface ILogger
     {
-        void LogInfo(String Message);
-        void LogError(String Message);
-        void LogDebug(String Message);
-        void LogException(Exception Exception, String Message=null);
+        void LogInfo(Object Source, String Message);
+        void LogInfo(Object Source, Exception Exception, String Message = null);
+        void LogError(Object Source, String Message);
+        void LogDebug(Object Source, String Message);
+        void LogError(Object Source, Exception Exception, string Message = null);
     }
 }

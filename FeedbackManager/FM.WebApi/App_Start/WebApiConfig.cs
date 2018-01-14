@@ -29,7 +29,8 @@ namespace FM.WebApi
             config.MessageHandlers.Add(authenticationHandler as AuthenticationHandler);
 
             // Set Filters.
-            config.Filters.Add(new ExceptionFilter());
+            object exceptionFilter = container.Resolve(typeof(ExceptionFilter), null);
+            config.Filters.Add(exceptionFilter as ExceptionFilter);
         }
     }
 }
