@@ -23,13 +23,7 @@ namespace FM.WebApi.Controllers
         [Route("feedbacks")]
         public IEnumerable<Feedback> Get()
         {
-            return feedbackBusinessService.SelectFeedbackByRating(1);
-        }
-
-        // GET api/values/5
-        public string Get(int id)
-        {
-            return "value";
+            return feedbackBusinessService.SelectByRating(1);
         }
 
         // POST api/feedbacks
@@ -41,17 +35,7 @@ namespace FM.WebApi.Controllers
                 feedback.SessionIdentifier = sessionId;
                 feedback.UserLogin = "vladokr";
             }
-            return feedbackBusinessService.CreateFeedback(feedback);
-        }
-
-        // PUT api/values/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/values/5
-        public void Delete(int id)
-        {
+            return feedbackBusinessService.Create(feedback);
         }
     }
 }

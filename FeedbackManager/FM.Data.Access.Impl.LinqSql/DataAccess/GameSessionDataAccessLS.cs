@@ -15,6 +15,11 @@ namespace FM.Data.Access.Impl.LinqSql.DataAccess
             throw new NotImplementedException();
         }
 
+        public IList<GameSession> Select(Func<GameSession, bool> criteria)
+        {
+            throw new NotImplementedException();
+        }
+
         public IList<GameSession> SelectAll()
         {
             throw new NotImplementedException();

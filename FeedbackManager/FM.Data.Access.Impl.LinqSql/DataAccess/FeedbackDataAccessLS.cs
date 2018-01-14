@@ -71,5 +71,32 @@ namespace FM.Data.Access.Impl.LinqSql.DataAccess
 
             return null;
         }
+
+        public IList<Feedback> Select(Func<Feedback, bool> criteria)
+        {
+            using (FeedbackManagerDataContext dataContext = new FeedbackManagerDataContext(this.csProvider.ConnectionString))
+            {
+                try
+                {                  
+                    var data = dataContext.FM_Feedbacks.Where((fm) => criteria(EntityMapper.MapToModel<Feedback, FM_Feedback>(fm)));
+                    if (data != null)
+                    {
+                        IList<Feedback> selectedFeedbacks = new List<Feedback>();
+                        data.ToList().ForEach((fm) => {
+                            Feedback feedback = EntityMapper.MapToModel<Feedback, FM_Feedback>(fm);
+                            selectedFeedbacks.Add(feedback);
+                        });
+                        return selectedFeedbacks;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new LinqToSqlDataAccessException("Unable to Select Feedback By Criteria", ex);
+                }
+            }
+
+            return null;
+        }
+
     }
 }

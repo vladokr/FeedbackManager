@@ -31,6 +31,11 @@ namespace FM.Data.Access.Impl.LinqSql.DataAccess
             throw new NotImplementedException();
         }
 
+        public IList<User> Select(Func<User, bool> criteria)
+        {
+            throw new NotImplementedException();
+        }
+
         public IList<User> SelectAll()
         {
             using (FeedbackManagerDataContext dataContext = new FeedbackManagerDataContext(this.csProvider.ConnectionString))
