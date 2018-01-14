@@ -20,11 +20,22 @@ namespace FM.WebApi.Controllers
             this.feedbackBusinessService = feedbackBusinessService;
         }
 
-        // GET /feedbacks
+        // GET /feedbacks/3
         [WebApiAuthorize(Roles = Role.OPERATOR)]
-        public IEnumerable<Feedback> Get()
+        [Route("feedbacks/{id:min(1)}")]
+        public IHttpActionResult Get(int Id)
         {
-            return feedbackBusinessService.SelectByRating(1);
+            Feedback feedback = feedbackBusinessService.SelectById(Id);
+            return Ok(feedback);
+        }
+
+        // GET /feedbacks/rating/2
+        [WebApiAuthorize(Roles = Role.OPERATOR)]
+        [Route("feedbacks/rating/{rating:range(1,5)}")]
+        public IHttpActionResult GetByRating(int Rating)
+        {
+            IEnumerable<Feedback> feedbacks = feedbackBusinessService.SelectByRating(Rating);
+            return Ok(feedbacks);
         }
 
         // POST /feedbacks/GUID

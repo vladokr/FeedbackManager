@@ -1,5 +1,6 @@
 ﻿using FM.Business.Interfaces;
 using FM.Domain.Model.Entities;
+using FM.WebApi.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +19,8 @@ namespace FM.WebApi.Controllers
             this.userBusinessService = UserBusinessService;
         }
 
-
-        // GET api/users
+        // GET /users
+        [WebApiAuthorize(Roles = Role.OPERATOR)]
         public IEnumerable<User> Get()
         {
             return userBusinessService.SelectAll();

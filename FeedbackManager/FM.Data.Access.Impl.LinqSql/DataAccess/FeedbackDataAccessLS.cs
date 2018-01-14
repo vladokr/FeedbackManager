@@ -57,9 +57,34 @@ namespace FM.Data.Access.Impl.LinqSql.DataAccess
             return SelectSingle(x => x.id == id);
         }
 
-        public IList<Feedback> SelectByRating(int rating)
+        public IList<Feedback> SelectByRatingPaging(int Rating, int PageIndex = 1, int PageSize = 15)
         {
-            return SelectMany(x => x.rating >= rating);
+            IList<Feedback> feedbacks = new List<Feedback>();
+            int skipRows = (PageIndex - 1) * PageSize;
+            using (FeedbackManagerDataContext dataContext = new FeedbackManagerDataContext(this.appConfig.ConnectionString))
+            {
+                try
+                {
+                    var dataItems = dataContext.FM_Feedbacks
+                                              .Where(x => x.rating >= Rating)
+                                              .OrderByDescending(x => x.create_date)
+                                              .Skip(skipRows)
+                                              .Take(PageSize);
+                    if (dataItems != null)
+                    {
+                        foreach (var item in dataItems)
+                        {
+                            Feedback model = EntityMapper.MapToModel<Feedback, FM_Feedback>(item);
+                            feedbacks.Add(model);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new LinqToSqlDataAccessException("Unable to SelectByRating.", ex);
+                }
+            }
+            return feedbacks;
         }
 
         #region Private General Select Methods
@@ -73,7 +98,7 @@ namespace FM.Data.Access.Impl.LinqSql.DataAccess
             return null;
         }
 
-        private IList<Feedback> SelectMany(Expression<Func<FM_Feedback, bool>> criteria)
+        private IList<Feedback> SelectMany(Expression<Func<FM_Feedback, bool>> Criteria)
         {
             IList<Feedback> feedbacks = new List<Feedback>();
             using (FeedbackManagerDataContext dataContext = new FeedbackManagerDataContext(this.appConfig.ConnectionString))
@@ -81,7 +106,11 @@ namespace FM.Data.Access.Impl.LinqSql.DataAccess
                 try
                 {
                     // If criteria is Null select all.
-                    var dataItems = criteria == null ? dataContext.FM_Feedbacks : dataContext.FM_Feedbacks.Where(criteria);
+                    IEnumerable<FM_Feedback> dataItems = Criteria == null ? 
+                                                         dataContext.FM_Feedbacks : 
+                                                         dataContext.FM_Feedbacks.Where(Criteria);
+
+                
                     if (dataItems != null)
                     {
                         foreach (var item in dataItems)

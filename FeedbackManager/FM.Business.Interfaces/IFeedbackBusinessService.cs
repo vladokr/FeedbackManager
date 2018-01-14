@@ -11,5 +11,6 @@ namespace FM.Business.Interfaces
     {
         Feedback Create(Feedback feedback);
         IList<Feedback> SelectByRating(int rating);
+        Feedback SelectById(int Id);
     }
 }

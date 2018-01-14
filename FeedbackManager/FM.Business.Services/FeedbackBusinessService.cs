@@ -31,7 +31,12 @@ namespace FM.Business.Services
       
         public IList<Feedback> SelectByRating(int rating)
         {
-            return feedbackDataAccess.SelectByRating(rating);
+            return feedbackDataAccess.SelectByRatingPaging(rating);
+        }
+
+        public Feedback SelectById(int Id)
+        {
+            return feedbackDataAccess.SelectById(Id);
         }
     }
 }
