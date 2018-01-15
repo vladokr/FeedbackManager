@@ -20,8 +20,9 @@ These instructions will get you a copy of the project up and running on your loc
 ### Installing
 
 * Clone the repository to a local directory
-* With VS 2017 open the solution file (.sln)
+* With VS 2017 open the solution file (FeedbackManager/FeedbackManager.sln)
 * Run a build and verify that there are no errors
+* Set as as start-up the WebApi project
 
 ### Seting up the Database
 
