@@ -14,6 +14,7 @@ namespace FM.Domain.Model.Entities
     {
         [DataMember]
         [Required]
+        [Range(1,5)]
         public int Rating { get; set; }
 
         [DataMember]
